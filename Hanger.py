@@ -62,10 +62,14 @@ words = {'Colors':'red orange yellow green blue indigo violet white black brown'
          'Fruits':'apple orange lemon lime pear watermelon grape grapefruit cherry banana cantalope mango strawberry tomato'.split()
          'Animals':'bat bear beaver cat couger crab deer dog donkey duck eagle fish frog goat leech lion lizard monkey moose mouse otter owl panda python rabbit rat shark sheep skunk squid tiger turkey turtle weasel whale wolf wombat zebra'.split()}
 
-def getRandomWord(wordList):
-    # This function returns a random string from the passed list of strings.
-    wordIndex = random.randint(0, len(wordList) - 1)
-    return wordList[wordIndex]
+def getRandomWord(wordDict):
+    # This function returns a random string from the passed dictionary of lists of strings, and the key also.
+    #First, randomly select a key from the dictionary
+    wordKey = random.choice(list(wordDict.keys()))
+
+    #Second, randomly select a word from the key's list in the dictionary
+    wordIndex = random.randint(0, len(wordDict[wordKey]) - 1)
+    return [wordDict[wordKey][wordIndex], wordKey]
 
 def displayBoard(HANGMANPICS, missedLetters, correctLetters, secretWord):
     print(HANGMANPICS[len(missedLetters)])
@@ -110,7 +114,7 @@ def playAgain():
 print('H A N G M A N')
 missedLetters = ''
 correctLetters = ''
-secretWord = getRandomWord(words)
+secretWord, secretKey = getRandomWord(words)
 gameIsDone = False
 
 while True:
@@ -146,6 +150,6 @@ while True:
             missedLetters = ''
             correctLetters = ''
             gameIsDone = False
-            secretWord = getRandomWord(words)
+            secretWord, secretKey = getRandomWord(words)
         else:
             break
